@@ -280,7 +280,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             if defense["type"] == "Build" and len(game_state.game_map[defense["location"]]) == 0 and self.current_SP >= defenseCost:
                 # Create defense and reduce wallet by cost
                 game_state.attempt_spawn(self.config["unitInformation"][defense["structure"]]["shorthand"], [defense["location"]])
-                gamelib.debug_write("Built: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
+                # gamelib.debug_write("Built: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
                 self.current_SP -= defenseCost
 
             # Check if trying to upgrade defense thats already upgrade and that we have the resources to upgrade it
@@ -289,11 +289,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             if defense["type"] == "Upgrade" and len(game_state.game_map[defense["location"]]) != 0 and not game_state.game_map[defense["location"]][0].upgraded and self.current_SP >= upgradeCost:
                 game_state.attempt_upgrade([defense["location"]])
                 self.current_SP -= upgradeCost
-                gamelib.debug_write("Upgraded: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
-
-            # gamelib.debug_write("Start")
-            # gamelib.debug_write(defense["location"])
-            # gamelib.debug_write(game_state.game_map[defense["location"]])
+                # gamelib.debug_write("Upgraded: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
 
         """
         # I think these starter turret locations are very important. The first two are to protect the corners, while the
@@ -327,6 +323,28 @@ class AlgoStrategy(gamelib.AlgoCore):
                     if structure is not None and structure.player_index == 1 and structure.unit_type == "DF":
                         scores[y][x] += 1
         return scores
+    
+    # Try to estimate the value of a path from the amount of units it will destroy.
+    def path_value(self, game_state, path):
+        value = 0
+        for location in path:
+            # If y is less than 11 then a demolisher could not hit anything anyways
+            visited = set()
+            if location[1] >= 11:
+                neighbor_locations = game_state.game_map.get_locations_in_range(location, 4.5)
+                for neighbor_location in neighbor_locations:
+                    structure = None if len(game_state.game_map[neighbor_location]) == 0 else game_state.game_map[neighbor_location][0]
+
+                    # In the case there is a turret in range of this tile, just return current value as this unit will die.
+                    if structure is not None and structure.unit_type == "DF" and math.dist(location, neighbor_location) <= 3.5:
+                        return value
+                    # Only occurs when structure is a turret or a shield and ensure we aren't double counting
+                    elif structure is not None and tuple(neighbor_location) not in visited:
+                        value += .5 if structure.unit_type == "FF" else 4
+                        visited.add(tuple(neighbor_location))
+
+        return value
+                    
 
 
 
@@ -347,12 +365,18 @@ class AlgoStrategy(gamelib.AlgoCore):
             if path is not None:
                 # Loop through each location and calculate score as average "vulnerability"
                 path_score = sum([scores[y][x] for (x, y) in path]) / len(path)        
-                valid_paths.append(start_pos + [path_score])
+                path_value = self.path_value(game_state, path)
+                valid_paths.append(start_pos + [path_score, path_value])
 
         # sort by lowest score
         valid_paths.sort(key=lambda elem: elem[2])
         gamelib.debug_write("Safest Path: ")
         gamelib.debug_write(valid_paths)
+
+        highest_value_paths = valid_paths.copy()
+        highest_value_paths.sort(key=lambda elem: elem[3])
+        gamelib.debug_write("Highest Value Paths:")
+        gamelib.debug_write(highest_value_paths)
 
 
         will_attack = False

@@ -125,7 +125,19 @@ priorityList = [
        {
         "type": "Build",
         "structure": 0,
-        "location": [21, 8],
+        "location": [19, 8],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [19, 7],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [19, 6],
         "comment": "Build a turret in the top left corner"
        },
        {
@@ -161,7 +173,19 @@ priorityList = [
        {
         "type": "Build",
         "structure": 0,
-        "location": [6, 8],
+        "location": [8, 8],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [8, 7],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [8, 6],
         "comment": "Build a turret in the top left corner"
        },
        {
@@ -336,7 +360,19 @@ emergencyDefense = [
        {
         "type": "Build",
         "structure": 0,
-        "location": [21, 8],
+        "location": [19, 8],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [19, 7],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [19, 6],
         "comment": "Build a turret in the top left corner"
        },
        {
@@ -372,9 +408,21 @@ emergencyDefense = [
        {
         "type": "Build",
         "structure": 0,
-        "location": [6, 8],
+        "location": [8, 8],
         "comment": "Build a turret in the top left corner"
        },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [8, 7],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [8, 6],
+        "comment": "Build a turret in the top left corner"
+       }
 ]
  
 
@@ -460,8 +508,8 @@ class AlgoStrategy(gamelib.AlgoCore):
                     gamelib.debug_write("Built: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
                     self.current_SP -= defenseCost
             
-            game_state.attempt_spawn(INTERCEPTOR, [22, 8])
-            game_state.attempt_spawn(INTERCEPTOR, [5, 8])
+            game_state.attempt_spawn(INTERCEPTOR, [20, 6])
+            game_state.attempt_spawn(INTERCEPTOR, [7, 6])
             
 
         # gamelib.debug_write(self.current_SP)
@@ -525,8 +573,8 @@ class AlgoStrategy(gamelib.AlgoCore):
 
     def build_offense(self, game_state):
         # fix this, this is dumb but im tired
-        valid_start_positions = [[0, 13], [1, 12], [2, 11], [3, 10], [4, 9], [6, 7], [7, 6], [8, 5], [9, 4], [10, 3], [11, 2], [12, 1], [13, 0],
-                                [14,0], [15, 1], [16, 2], [17, 3], [18, 4], [19, 5], [20, 6], [21, 7], [23, 9], [24, 10], [25, 11], [26, 12], [27, 13]]
+        valid_start_positions = [[0, 13], [1, 12], [2, 11], [3, 10], [4, 9], [8, 5], [9, 4], [10, 3], [11, 2], [12, 1], [13, 0],
+                                [14,0], [15, 1], [16, 2], [17, 3], [18, 4], [19, 5], [23, 9], [24, 10], [25, 11], [26, 12], [27, 13]]
         
         scores = self.score_per_tile(game_state)
         valid_paths = []

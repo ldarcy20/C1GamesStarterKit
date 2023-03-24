@@ -109,7 +109,97 @@ priorityList = [
         "structure": 2,
         "location": [18, 9],
         "comment": "Upgrade the turret that protects the left side in the middle"
+       },
+
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [3, 13],
+        "comment": "Upgrade the wall in front of the left corner turret, walls are only good once upgraded"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [23, 13],
+        "comment": "Upgrade the wall in front of the right corner turret, walls are only good once upgraded"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [9, 10],
+        "comment": "Build a wall in front of the center-left turret to protect it, try to upgrade this one asap"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [9, 10],
+        "comment": "Upgrade the wall in front of the center-left turret, walls are only good once upgraded"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [18, 10],
+        "comment": "Build a wall in front of the center-right turret to protect it, try to upgrade this one asap"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [18, 10],
+        "comment": "Upgrade the wall in front of the center-right turret, walls are only good once upgraded"
+       },
+
+
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [4, 13],
+        "comment": "Build a wall in the front-right spot of the left corner turret to protect it, try to upgrade this one asap"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [4, 13],
+        "comment": "Upgrade the wall in the front-right spot of the left corner turret, walls are only good once upgraded"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [23, 13],
+        "comment": "Build a wall in the front-left spot of the right corner turret to protect it, try to upgrade this one asap"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [23, 13],
+        "comment": "Upgrade the wall in the front-left spot of the right corner turret, walls are only good once upgraded"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [10, 10],
+        "comment": "Build a wall in the front-right spot of the center-left turret to protect it, try to upgrade this one asap"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [10, 10],
+        "comment": "Upgrade the wall in the front-right spot of the center-left corner turret, walls are only good once upgraded"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [17, 10],
+        "comment": "Build a wall in the front-left spot of the center-right turret to protect it, try to upgrade this one asap"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [17, 10],
+        "comment": "Upgrade the wall in the front-left spot of the center-right turret, walls are only good once upgraded"
        }
+
+
+
     ]
 
 
@@ -121,7 +211,6 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write('Random seed: {}'.format(seed))
 
         self.defense_priority_list = priorityList
-        self.reserve = 0
 
     def on_game_start(self, config):
         """ 
@@ -172,6 +261,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         """
         self.current_SP = game_state.get_resource(0, 0)
         self.current_MP = game_state.get_resource(1, 0)
+        self.enemy_MP = game_state.get_resource(1, 1)
 
         self.build_base_defenses(game_state)
 
@@ -187,7 +277,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         for defense in self.defense_priority_list:
             # Check if trying to build defense thats already built and that we have the resources to build it
             defenseCost = self.config[uI][defense["structure"]]["cost1"]
-            if defense["type"] == "Build" and len(game_state.game_map[defense["location"]]) == 0 and self.current_SP >= (defenseCost + self.reserve):
+            if defense["type"] == "Build" and len(game_state.game_map[defense["location"]]) == 0 and self.current_SP >= defenseCost:
                 # Create defense and reduce wallet by cost
                 game_state.attempt_spawn(self.config["unitInformation"][defense["structure"]]["shorthand"], [defense["location"]])
                 gamelib.debug_write("Built: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
@@ -196,7 +286,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             # Check if trying to upgrade defense thats already upgrade and that we have the resources to upgrade it
             # also you literally cannot lookup the cost of an upgrade in the config it is the dumbest thing
             upgradeCost = 6 if defense["structure"] == 2 else (1.5 if defense["structure"] == 0 else 2)
-            if defense["type"] == "Upgrade" and len(game_state.game_map[defense["location"]]) != 0 and not game_state.game_map[defense["location"]][0].upgraded and self.current_SP >= (upgradeCost + self.reserve):
+            if defense["type"] == "Upgrade" and len(game_state.game_map[defense["location"]]) != 0 and not game_state.game_map[defense["location"]][0].upgraded and self.current_SP >= upgradeCost:
                 game_state.attempt_upgrade([defense["location"]])
                 self.current_SP -= upgradeCost
                 gamelib.debug_write("Upgraded: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
@@ -264,14 +354,38 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write("Safest Path: ")
         gamelib.debug_write(valid_paths)
 
+
+        will_attack = False
+
         # if we have at least eight mobile points and there is no threat at all on the lowest path, then attack with all scouts
         if self.current_MP >= 8 and valid_paths[0][2] == 0:
             game_state.attempt_spawn(SCOUT, [valid_paths[0][0:2]], math.floor(self.current_MP))
+            will_attack = True
 
         # After a lot of testing, I found that spawning 3 scouts and 2 demolishers works pretty well.
-        if valid_paths[0][2] > 0 and self.current_MP >= 9:
+        if 0 < valid_paths[0][2] < .3 and self.current_MP >= 9:
             game_state.attempt_spawn(SCOUT, [valid_paths[0][0:2]], 3)
             game_state.attempt_spawn(DEMOLISHER, [valid_paths[0][0:2]], 2)
+            will_attack = True
+
+        # When a path has a lot of threats on it, send a large pack of demolishers.
+        elif valid_paths[0][2] >= .3 and self.current_MP >= 12 and self.enemy_MP < 8:
+            game_state.attempt_spawn(DEMOLISHER, [valid_paths[0][0:2]], 4)
+            will_attack = True
+
+
+        # If we are trying to build a push and can afford shields, then buy them
+        if will_attack and self.current_SP >= 4:
+            # This is to deal with attacks from both sides, to ensure that support can reach
+            shield_location = [10, 9] if (valid_paths[0][0] < 9 or 14 < valid_paths[0][0] < 18) else [17, 9]
+
+            game_state.attempt_spawn(SUPPORT, [shield_location])
+            self.current_SP -= 4
+
+            if self.current_SP >= 2:
+                game_state.attempt_upgrade([shield_location])
+
+
 
         # Removing this for right now, I think its a good idea though...
         """
@@ -290,6 +404,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             if len(valid_paths) > 0:
                 pathing_walls = 
         """
+
 
 
 

@@ -326,6 +326,153 @@ priorityList = [
 
     ]
 
+supportList = [
+        {
+        "type": "Build",
+        "structure": 1,
+        "location": [12, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [13, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [14, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [15, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [12, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [13, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [14, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [15, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [12, 9],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [13, 9],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [14, 9],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 1,
+        "location": [15, 9],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [12, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [13, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [14, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [15, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [12, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [13, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [14, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [15, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [12, 9],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [13, 9],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [14, 9],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 1,
+        "location": [15, 9],
+        "comment": "Build a turret in the top left corner"
+       },
+]
+
 emergencyDefense = [
         {
         "type": "Build",
@@ -435,6 +582,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         self.defense_priority_list = priorityList
         self.emergency_defense_priority_list = emergencyDefense
+        self.support_list = supportList
 
     def on_game_start(self, config):
         """ 
@@ -499,7 +647,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         """
 
         # Predicting big enemy attack
-        if (self.enemy_MP >= 9):
+        if (self.enemy_MP >= 10):
             for defense in self.emergency_defense_priority_list:
                 defenseCost = self.config[uI][defense["structure"]]["cost1"]
                 if defense["type"] == "Build" and len(game_state.game_map[defense["location"]]) == 0 and self.current_SP >= defenseCost:
@@ -560,13 +708,19 @@ class AlgoStrategy(gamelib.AlgoCore):
             yVals = range(13 - y, 27 - (13 - y) + 1) if y < 14 else range(y - 14, 27 - (y - 14) + 1)
             for x in yVals:
                 # 3.5 is the range of a turret.
-                locations = game_state.game_map.get_locations_in_range([x, y], 3.5)
+                locations1 = game_state.game_map.get_locations_in_range([x, y], 3.5)
+                locations2 = game_state.game_map.get_locations_in_range([x, y], 4.5)
 
                 # Loop through each location within 3.5 tiles of each (x,y) pair and count number of turrets within that radius
-                for location in locations:
+                for location in locations1:
                     structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
                     if structure is not None and structure.player_index == 1 and structure.unit_type == "DF":
-                        scores[y][x] += 1
+                        scores[y][x] += 1.5
+
+                for location in locations2:
+                    structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == "DF":
+                        scores[y][x] -= 0.5
         return scores
 
 
@@ -614,17 +768,29 @@ class AlgoStrategy(gamelib.AlgoCore):
             game_state.attempt_spawn(DEMOLISHER, [valid_paths[0][0:2]], 4)
             will_attack = True
 
+        # We have too many mobile points
+        elif self.current_MP >= 18:
+            game_state.attempt_spawn(DEMOLISHER, [valid_paths[0][0:2]], 6)
+            will_attack = True
 
         # If we are trying to build a push and can afford shields, then buy them
-        if will_attack and self.current_SP >= 4:
-            # This is to deal with attacks from both sides, to ensure that support can reach
-            shield_location = [10, 9] if (valid_paths[0][0] < 9 or 14 < valid_paths[0][0] < 18) else [17, 9]
+        if will_attack:
+            for support in self.support_list:
+                # Check if trying to build defense thats already built and that we have the resources to build it
+                defenseCost = self.config[uI][support["structure"]]["cost1"]
+                if support["type"] == "Build" and len(game_state.game_map[support["location"]]) == 0 and self.current_SP >= defenseCost:
+                    # Create defense and reduce wallet by cost
+                    game_state.attempt_spawn(self.config["unitInformation"][support["structure"]]["shorthand"], [support["location"]])
+                    gamelib.debug_write("Built: " + str(self.config["unitInformation"][support["structure"]]["shorthand"]))
+                    self.current_SP -= defenseCost
 
-            game_state.attempt_spawn(SUPPORT, [shield_location])
-            self.current_SP -= 4
-
-            if self.current_SP >= 2:
-                game_state.attempt_upgrade([shield_location])
+                # Check if trying to upgrade defense thats already upgrade and that we have the resources to upgrade it
+                # also you literally cannot lookup the cost of an upgrade in the config it is the dumbest thing
+                upgradeCost = 2 if support["structure"] == 1 else 1000000
+                if support["type"] == "Upgrade" and len(game_state.game_map[support["location"]]) != 0 and not game_state.game_map[support["location"]][0].upgraded and self.current_SP >= upgradeCost:
+                    game_state.attempt_upgrade([support["location"]])
+                    self.current_SP -= upgradeCost
+                    gamelib.debug_write("Upgraded: " + str(self.config["unitInformation"][support["structure"]]["shorthand"]))
 
 
 

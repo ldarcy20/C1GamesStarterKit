@@ -95,97 +95,25 @@ priorityList = [
        {
         "type": "Build",
         "structure": 0,
-        "location": [23, 9],
+        "location": [5, 12],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [5, 12],
         "comment": "Build a turret in the top left corner"
        },
        {
         "type": "Build",
         "structure": 0,
-        "location": [22, 10],
+        "location": [22, 12],
         "comment": "Build a turret in the top left corner"
        },
        {
-        "type": "Build",
+        "type": "Upgrade",
         "structure": 0,
-        "location": [21, 11],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [20, 10],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [20, 9],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [19, 8],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [19, 7],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [19, 6],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [4, 9],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [5, 10],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [6, 11],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [7, 10],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [7, 9],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [8, 8],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [8, 7],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [8, 6],
+        "location": [22, 12],
         "comment": "Build a turret in the top left corner"
        },
        {
@@ -319,7 +247,152 @@ priorityList = [
         "structure": 0,
         "location": [6, 11],
         "comment": "Build a turret in the top left corner"
-       }       
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [9, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [9, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [11, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [11, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [12, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [12, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [13, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [13, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [14, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [14, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [15, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [15, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [16, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [16, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [18, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [18, 11],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [9, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [9, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [18, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [18, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 2,
+        "location": [11, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [11, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 2,
+        "location": [16, 10],
+        "comment": "Build a turret in the top left corner"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [16, 10],
+        "comment": "Build a turret in the top left corner"
+       }
+              
        
        
 
@@ -330,25 +403,25 @@ supportList = [
         {
         "type": "Build",
         "structure": 1,
-        "location": [12, 11],
+        "location": [12, 8],
         "comment": "Build a turret in the top left corner"
        },
        {
         "type": "Build",
         "structure": 1,
-        "location": [13, 11],
+        "location": [13, 8],
         "comment": "Build a turret in the top left corner"
        },
        {
         "type": "Build",
         "structure": 1,
-        "location": [14, 11],
+        "location": [14, 8],
         "comment": "Build a turret in the top left corner"
        },
        {
         "type": "Build",
         "structure": 1,
-        "location": [15, 11],
+        "location": [15, 8],
         "comment": "Build a turret in the top left corner"
        },
        {
@@ -402,25 +475,25 @@ supportList = [
        {
         "type": "Upgrade",
         "structure": 1,
-        "location": [12, 11],
+        "location": [12, 8],
         "comment": "Build a turret in the top left corner"
        },
        {
         "type": "Upgrade",
         "structure": 1,
-        "location": [13, 11],
+        "location": [13, 8],
         "comment": "Build a turret in the top left corner"
        },
        {
         "type": "Upgrade",
         "structure": 1,
-        "location": [14, 11],
+        "location": [14, 8],
         "comment": "Build a turret in the top left corner"
        },
        {
         "type": "Upgrade",
         "structure": 1,
-        "location": [15, 11],
+        "location": [15, 8],
         "comment": "Build a turret in the top left corner"
        },
        {
@@ -648,16 +721,23 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # Predicting big enemy attack
         if (self.enemy_MP >= 10):
+            isAlreadyBuilt = True
             for defense in self.emergency_defense_priority_list:
                 defenseCost = self.config[uI][defense["structure"]]["cost1"]
                 if defense["type"] == "Build" and len(game_state.game_map[defense["location"]]) == 0 and self.current_SP >= defenseCost:
                     # Create defense and reduce wallet by cost
+                    isAlreadyBuilt = False
                     game_state.attempt_spawn(self.config["unitInformation"][defense["structure"]]["shorthand"], [defense["location"]])
                     gamelib.debug_write("Built: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
                     self.current_SP -= defenseCost
             
-            game_state.attempt_spawn(INTERCEPTOR, [20, 6])
-            game_state.attempt_spawn(INTERCEPTOR, [7, 6])
+            if isAlreadyBuilt:
+                game_state.attempt_spawn(INTERCEPTOR, [20, 6])
+                game_state.attempt_spawn(INTERCEPTOR, [7, 6])
+
+            else:
+                game_state.attempt_spawn(INTERCEPTOR, [22, 8])
+                game_state.attempt_spawn(INTERCEPTOR, [5, 8])
             
 
         # gamelib.debug_write(self.current_SP)
@@ -714,21 +794,34 @@ class AlgoStrategy(gamelib.AlgoCore):
                 # Loop through each location within 3.5 tiles of each (x,y) pair and count number of turrets within that radius
                 for location in locations1:
                     structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
-                    if structure is not None and structure.player_index == 1 and structure.unit_type == "DF":
-                        scores[y][x] += 1.5
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == TURRET:
+                        scores[y][x] += 1.3
 
                 for location in locations2:
                     structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
-                    if structure is not None and structure.player_index == 1 and structure.unit_type == "DF":
-                        scores[y][x] -= 0.5
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == TURRET:
+                        scores[y][x] -= 0.4
+
+                for location in locations2:
+                    structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == SUPPORT:
+                        scores[y][x] -= 0.6
+
+                for location in locations2:
+                    structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == WALL:
+                        scores[y][x] -= 0.05
+
+                
+
         return scores
 
 
 
     def build_offense(self, game_state):
         # fix this, this is dumb but im tired
-        valid_start_positions = [[0, 13], [1, 12], [2, 11], [3, 10], [4, 9], [8, 5], [9, 4], [10, 3], [11, 2], [12, 1], [13, 0],
-                                [14,0], [15, 1], [16, 2], [17, 3], [18, 4], [19, 5], [23, 9], [24, 10], [25, 11], [26, 12], [27, 13]]
+        valid_start_positions = [[8, 5], [9, 4], [10, 3], [11, 2], [12, 1], [13, 0],
+                                [14,0], [15, 1], [16, 2], [17, 3], [18, 4], [19, 5]]
         
         scores = self.score_per_tile(game_state)
         valid_paths = []

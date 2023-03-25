@@ -329,8 +329,9 @@ class AlgoStrategy(gamelib.AlgoCore):
         self.defense_priority_list = priorityList
         self.prev_defense_priority_list = None
         self.last_attack_round = 0
+        self.attempt_infiltrate_attack = False
         self.completed_infiltrate_attack = False
-        self.do_not_attack = False
+        self.demolisher_spawns = {}
 
     def on_game_start(self, config):
         """ 
@@ -395,19 +396,16 @@ class AlgoStrategy(gamelib.AlgoCore):
         savings_3_rounds = (((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round
         savings_4_rounds = (((((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round) * .75) + mp_per_round
 
-        if self.enemy_MP >= savings_3_rounds:
-            self.do_not_attack = True
-            game_state.attempt_spawn(WALL, [[4, 10]])
-            game_state.attempt_remove([[4, 10]])
+        if self.enemy_MP >= (savings_3_rounds - 2):
+            # game_state.attempt_spawn(WALL, [[4, 10]])
+            # game_state.attempt_remove([[4, 10]])
             self.current_SP -= .5
 
             game_state.attempt_spawn(INTERCEPTOR, [[7, 6]], 1)
             self.current_SP -= 1
-            if self.enemy_MP >= savings_4_rounds:
+            if self.enemy_MP >= (savings_4_rounds - 3):
                 game_state.attempt_spawn(INTERCEPTOR, [[5, 8]], 1)
                 self.current_SP -= 1
-        else:
-            self.do_not_attack = False
 
 
 
@@ -467,6 +465,18 @@ class AlgoStrategy(gamelib.AlgoCore):
                 game_state.attempt_upgrade([shield_spot])
                 self.current_SP -= 2
 
+
+    def score_for_a_tile(self, game_state, tile_location):
+        score = 0
+        locations = game_state.game_map.get_locations_in_range(tile_location, 3.5)
+
+        # Loop through each location within 3.5 tiles of each (x,y) pair and count number of turrets within that radius
+        for location in locations:
+            structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+            if structure is not None and structure.player_index == 1 and structure.unit_type == "DF":
+                score += 1
+        return score
+        
     """
     For every relevant tile on the map, count the number of turrets that can reach it. The idea is that this will be a good
     estimate for how vunerable a tile is for the enemy.
@@ -513,8 +523,30 @@ class AlgoStrategy(gamelib.AlgoCore):
     def can_infiltrate(self, game_state):
         structure1 = game_state.game_map[[0, 14]]
         structure2 = game_state.game_map[[1, 14]]
-        if len(structure1) == 0 and len(structure2) == 0:
-            return True
+        structure3 = game_state.game_map[[1, 15]]
+        if len(structure1) == 0:
+            game_state.attempt_remove([[0, 13], [1, 13]])
+            self.prev_defense_priority_list = self.defense_priority_list.copy()
+            self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[0, 13], [1, 13]]]
+            self.attempt_infiltrate_attack = True
+            return
+
+        if len(structure2) == 0 and len(structure3) == 0:
+            game_state.attempt_remove([[1, 13]])
+            self.prev_defense_priority_list = self.defense_priority_list.copy()
+            self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[1, 13]]]
+            self.attempt_infiltrate_attack = True
+            return
+        
+        if len(structure1) != 0 and structure1[0].unit_type == "FF" and not structure1[0].upgraded:
+            game_state.attempt_remove([[0, 13], [1, 13]])
+            self.prev_defense_priority_list = self.defense_priority_list.copy()
+            self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[0, 13], [1, 13]]]
+            self.attempt_infiltrate_attack = True
+            self.demolisher_spawns = {(0, 13): 1}
+            return
+
+        """
         structure3 = game_state.game_map[[2, 14]]
         structure4 = game_state.game_map[[3, 14]]
         structure5 = game_state.game_map[[4, 14]]
@@ -524,43 +556,31 @@ class AlgoStrategy(gamelib.AlgoCore):
         upgraded_wall_4 = True if len(structure4) == 0 or structure4[0].unit_type != "FF" or not structure4[0].upgraded else False
         upgraded_wall_5 = True if len(structure5) == 0 or structure5[0].unit_type != "FF" or not structure5[0].upgraded else False
         if upgraded_wall_1 and upgraded_wall_2 and upgraded_wall_3 and upgraded_wall_4 and upgraded_wall_5:
-            return True
+            self.attempt_infiltrate_attack = True
+        """
         
-        return False
-
 
     def build_offense(self, game_state):
-        # Check for infiltrate attack
-        if self.do_not_attack:
-            return
-        
-        if game_state.turn_number > 20:
-            gamelib.debug_write("Can Infiltrate:")
-            gamelib.debug_write(self.can_infiltrate(game_state))
-            can_infiltrate = self.can_infiltrate(game_state)
-
-            if can_infiltrate and self.current_MP >= 25:
-                game_state.attempt_remove([[0, 13], [1, 13]])
-                self.prev_defense_priority_list = self.defense_priority_list.copy()
-                self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[0, 13], [1, 13]]]
-
-            if len(game_state.game_map[[0, 13]]) == 0 and len(game_state.game_map[[1, 13]]) == 0 and self.current_MP >= 25:
+        # Check for infiltrate attack        
+        if game_state.turn_number > 6:
+            mp_per_round = (5 + game_state.turn_number // 10)
+            savings_2_rounds =  ((mp_per_round * .75) + mp_per_round)
+            savings_3_rounds = (((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round
+            if self.attempt_infiltrate_attack and self.current_MP >= savings_3_rounds:
                 # Check if both inner two walls are not upgraded
-                structure1 = game_state.game_map[[0, 14]]
-                structure2 = game_state.game_map[[1, 14]]
-                upgraded_wall_1 = False if len(structure1) == 0 or structure1[0].unit_type != "FF" or not structure1[0].upgraded else True
-                upgraded_wall_2 = False if len(structure2) == 0 or structure2[0].unit_type != "FF" or not structure2[0].upgraded else True
-                if upgraded_wall_1 or upgraded_wall_2:
-                    game_state.attempt_spawn(DEMOLISHER, [0, 13], 5)
-                    self.current_MP -= 15
-                else:
-                    game_state.attempt_spawn(DEMOLISHER, [0, 13], 2)
-                    self.current_MP -= 6
+                for demolisher_spawn in self.demolisher_spawns:
+                    game_state.attempt_spawn(DEMOLISHER, list(demolisher_spawn), self.demolisher_spawns[demolisher_spawn])
+                    self.current_MP -= (3 * self.demolisher_spawns[demolisher_spawn])
 
-                game_state.attempt_spawn(SCOUT, [14, 0], math.floor(self.current_MP))
+                game_state.attempt_spawn(SCOUT, [18, 4], math.floor(self.current_MP))
+                self.current_MP -= math.floor(self.current_MP)
+                self.last_attack_round = game_state.turn_number
                 self.completed_infiltrate_attack = True
 
-            if can_infiltrate:
+            if self.current_MP >= savings_2_rounds:
+                self.can_infiltrate(game_state)
+
+            if self.attempt_infiltrate_attack and not self.completed_infiltrate_attack:
                 return 
 
         # fix this, this is dumb but im tired

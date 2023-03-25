@@ -10,194 +10,310 @@ uI = "unitInformation"
 priorityList = [
        {
         "type": "Build",
-        "structure": 2,
-        "location": [3, 12],
-        "comment": "Build a turret in the top left corner"
-       },
-       {
-        "type": "Build",
-        "structure": 2,
-        "location": [24, 12],
-        "comment": "Build a turret in the top right corner"
-       },
-       {
-        "type": "Build",
-        "structure": 2,
-        "location": [9, 9],
-        "comment": "Build a turret to protect the left side in the middle"
-       },
-       {
-        "type": "Build",
-        "structure": 2,
-        "location": [18, 9],
-        "comment": "Build a turret to protect the right side in the middle"
-       },
-
-
-       {
-        "type": "Upgrade",
-        "structure": 2,
-        "location": [3, 12],
-        "comment": "Upgrade the turret on the left corner"
-       },
-       {
-        "type": "Upgrade",
-        "structure": 2,
-        "location": [24, 12],
-        "comment": "Upgrade the turret on the right corner"
-       },
-
-
-       {
-        "type": "Build",
         "structure": 0,
         "location": [0, 13],
-        "comment": "Build a wall to protect the left corner"
        },
        {
         "type": "Build",
         "structure": 0,
         "location": [1, 13],
-        "comment": "Build a wall to protect the left corner"
        },
        {
         "type": "Build",
         "structure": 0,
         "location": [2, 13],
-        "comment": "Build a wall to protect the left corner"
        },
        {
         "type": "Build",
         "structure": 0,
         "location": [3, 13],
-        "comment": "Build a wall to protect the left corner"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [4, 13],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [23, 13],
        },
        {
         "type": "Build",
         "structure": 0,
         "location": [24, 13],
-        "comment": "Build a wall to protect the right corner"
        },
        {
         "type": "Build",
         "structure": 0,
         "location": [25, 13],
-        "comment": "Build a wall to protect the right corner"
        },
        {
         "type": "Build",
         "structure": 0,
         "location": [26, 13],
-        "comment": "Build a wall to protect the right corner"
        },
        {
         "type": "Build",
         "structure": 0,
         "location": [27, 13],
-        "comment": "Build a wall to protect the right corner"
        },
 
 
        {
-        "type": "Upgrade",
+        "type": "Build",
         "structure": 2,
-        "location": [9, 9],
-        "comment": "Upgrade the turret that protects the left side in the middle"
+        "location": [3, 12],
        },
        {
-        "type": "Upgrade",
+        "type": "Build",
         "structure": 2,
-        "location": [18, 9],
-        "comment": "Upgrade the turret that protects the left side in the middle"
+        "location": [24, 12],
        },
+
+
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [26, 12],
+        "comment": "These are to create the funnel"
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [25, 11],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [24, 10],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [23, 9],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [22, 8],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [21, 7],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [20, 6],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [19, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [6, 11],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [7, 9],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [8, 8],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [9, 7],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [10, 6],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [11, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [12, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [13, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [14, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [15, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [16, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [17, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [18, 5],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [19, 5],
+       },
+
+
+       {
+        "type": "Build",
+        "structure": 2,
+        "location": [5, 10],
+        "comment": "Turret protecting entrance of funnel"
+       },
+       {
+        "type": "Build",
+        "structure": 2,
+        "location": [6, 10],
+        "comment": "Turret protecting entrance of funnel"
+       },
+
+
 
        {
         "type": "Upgrade",
         "structure": 0,
         "location": [3, 13],
-        "comment": "Upgrade the wall in front of the left corner turret, walls are only good once upgraded"
-       },
-       {
-        "type": "Upgrade",
-        "structure": 0,
-        "location": [23, 13],
-        "comment": "Upgrade the wall in front of the right corner turret, walls are only good once upgraded"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [9, 10],
-        "comment": "Build a wall in front of the center-left turret to protect it, try to upgrade this one asap"
-       },
-       {
-        "type": "Upgrade",
-        "structure": 0,
-        "location": [9, 10],
-        "comment": "Upgrade the wall in front of the center-left turret, walls are only good once upgraded"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [18, 10],
-        "comment": "Build a wall in front of the center-right turret to protect it, try to upgrade this one asap"
-       },
-       {
-        "type": "Upgrade",
-        "structure": 0,
-        "location": [18, 10],
-        "comment": "Upgrade the wall in front of the center-right turret, walls are only good once upgraded"
-       },
-
-
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [4, 13],
-        "comment": "Build a wall in the front-right spot of the left corner turret to protect it, try to upgrade this one asap"
+        "comment": "These are to upgrade the front walls"
        },
        {
         "type": "Upgrade",
         "structure": 0,
         "location": [4, 13],
-        "comment": "Upgrade the wall in the front-right spot of the left corner turret, walls are only good once upgraded"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [23, 13],
-        "comment": "Build a wall in the front-left spot of the right corner turret to protect it, try to upgrade this one asap"
        },
        {
         "type": "Upgrade",
         "structure": 0,
         "location": [23, 13],
-        "comment": "Upgrade the wall in the front-left spot of the right corner turret, walls are only good once upgraded"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [10, 10],
-        "comment": "Build a wall in the front-right spot of the center-left turret to protect it, try to upgrade this one asap"
        },
        {
         "type": "Upgrade",
         "structure": 0,
-        "location": [10, 10],
-        "comment": "Upgrade the wall in the front-right spot of the center-left corner turret, walls are only good once upgraded"
-       },
-       {
-        "type": "Build",
-        "structure": 0,
-        "location": [17, 10],
-        "comment": "Build a wall in the front-left spot of the center-right turret to protect it, try to upgrade this one asap"
+        "location": [24, 13],
        },
        {
         "type": "Upgrade",
         "structure": 0,
-        "location": [17, 10],
-        "comment": "Upgrade the wall in the front-left spot of the center-right turret, walls are only good once upgraded"
-       }
+        "location": [2, 13],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [25, 13],
+       },
 
+
+       {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [3, 12],
+        "comment": "These are to upgrade turrets"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [24, 12],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [5, 10],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [6, 10],
+       },
+
+
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [0, 13],
+        "comment": "These are to upgrade walls on the very corners"
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [1, 13],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [26, 13],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [27, 13],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [6, 11],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [7, 9],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [8, 8],
+       },
+
+
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [23, 12],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [24, 11],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [23, 12],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [24, 11],
+       },
 
 
     ]
@@ -211,6 +327,10 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write('Random seed: {}'.format(seed))
 
         self.defense_priority_list = priorityList
+        self.prev_defense_priority_list = None
+        self.last_attack_round = 0
+        self.completed_infiltrate_attack = False
+        self.do_not_attack = False
 
     def on_game_start(self, config):
         """ 
@@ -265,7 +385,30 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         self.build_base_defenses(game_state)
 
+        self.build_shields(game_state)
+
         self.build_offense(game_state)
+
+    def build_self_destruct_defense(self, game_state):
+        # TODO: if it just recently changed rounds to a new multiple of 10, this will be wrong
+        mp_per_round = (5 + game_state.turn_number // 10)
+        savings_3_rounds = (((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round
+        savings_4_rounds = (((((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round) * .75) + mp_per_round
+
+        if self.enemy_MP >= savings_3_rounds:
+            self.do_not_attack = True
+            game_state.attempt_spawn(WALL, [[4, 10]])
+            game_state.attempt_remove([[4, 10]])
+            self.current_SP -= .5
+
+            game_state.attempt_spawn(INTERCEPTOR, [[7, 6]], 1)
+            self.current_SP -= 1
+            if self.enemy_MP >= savings_4_rounds:
+                game_state.attempt_spawn(INTERCEPTOR, [[5, 8]], 1)
+                self.current_SP -= 1
+        else:
+            self.do_not_attack = False
+
 
 
     def build_base_defenses(self, game_state):
@@ -273,6 +416,14 @@ class AlgoStrategy(gamelib.AlgoCore):
         Build and reinforce basic defences. This works by going through a priority list in "priority_list.json" and 
         building/upgrading based on this priority.
         """
+        if self.completed_infiltrate_attack:
+            self.defense_priority_list = self.prev_defense_priority_list
+            self.completed_infiltrate_attack = False
+
+
+        # Try to build self-destruct defense, pretty powerful.
+        self.build_self_destruct_defense(game_state)
+
         # gamelib.debug_write(self.current_SP)
         for defense in self.defense_priority_list:
             # Check if trying to build defense thats already built and that we have the resources to build it
@@ -301,6 +452,20 @@ class AlgoStrategy(gamelib.AlgoCore):
         # time
         game_state.attempt_upgrade(base_turret_locations[:2])
         """
+    
+    def build_shields(self, game_state):
+        shield_spots = [[17, 6], [16, 4], [16, 6], [15, 4], [15, 6], [14, 4], [14, 6], [13, 4], [13, 6], [12, 4], [12, 6], [11, 4], [11, 6]]
+        # Build shields
+        for shield_spot in shield_spots:
+            if self.current_SP >= 6 and len(game_state.game_map[shield_spot]) == 0:
+                game_state.attempt_spawn(SUPPORT, [shield_spot], 1)
+                self.current_SP -= 4
+
+        # Upgrade shields
+        for shield_spot in shield_spots:
+            if self.current_SP >= 6 and len(game_state.game_map[shield_spot]) != 0:
+                game_state.attempt_upgrade([shield_spot])
+                self.current_SP -= 2
 
     """
     For every relevant tile on the map, count the number of turrets that can reach it. The idea is that this will be a good
@@ -344,13 +509,62 @@ class AlgoStrategy(gamelib.AlgoCore):
                         visited.add(tuple(neighbor_location))
 
         return value
-                    
-
+    
+    def can_infiltrate(self, game_state):
+        structure1 = game_state.game_map[[0, 14]]
+        structure2 = game_state.game_map[[1, 14]]
+        if len(structure1) == 0 and len(structure2) == 0:
+            return True
+        structure3 = game_state.game_map[[2, 14]]
+        structure4 = game_state.game_map[[3, 14]]
+        structure5 = game_state.game_map[[4, 14]]
+        upgraded_wall_1 = True if len(structure1) == 0 or structure1[0].unit_type != "FF" or not structure1[0].upgraded else False
+        upgraded_wall_2 = True if len(structure2) == 0 or structure2[0].unit_type != "FF" or not structure2[0].upgraded else False
+        upgraded_wall_3 = True if len(structure3) == 0 or structure3[0].unit_type != "FF" or not structure3[0].upgraded else False
+        upgraded_wall_4 = True if len(structure4) == 0 or structure4[0].unit_type != "FF" or not structure4[0].upgraded else False
+        upgraded_wall_5 = True if len(structure5) == 0 or structure5[0].unit_type != "FF" or not structure5[0].upgraded else False
+        if upgraded_wall_1 and upgraded_wall_2 and upgraded_wall_3 and upgraded_wall_4 and upgraded_wall_5:
+            return True
+        
+        return False
 
 
     def build_offense(self, game_state):
+        # Check for infiltrate attack
+        if self.do_not_attack:
+            return
+        
+        if game_state.turn_number > 20:
+            gamelib.debug_write("Can Infiltrate:")
+            gamelib.debug_write(self.can_infiltrate(game_state))
+            can_infiltrate = self.can_infiltrate(game_state)
+
+            if can_infiltrate and self.current_MP >= 25:
+                game_state.attempt_remove([[0, 13], [1, 13]])
+                self.prev_defense_priority_list = self.defense_priority_list.copy()
+                self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[0, 13], [1, 13]]]
+
+            if len(game_state.game_map[[0, 13]]) == 0 and len(game_state.game_map[[1, 13]]) == 0 and self.current_MP >= 25:
+                # Check if both inner two walls are not upgraded
+                structure1 = game_state.game_map[[0, 14]]
+                structure2 = game_state.game_map[[1, 14]]
+                upgraded_wall_1 = False if len(structure1) == 0 or structure1[0].unit_type != "FF" or not structure1[0].upgraded else True
+                upgraded_wall_2 = False if len(structure2) == 0 or structure2[0].unit_type != "FF" or not structure2[0].upgraded else True
+                if upgraded_wall_1 or upgraded_wall_2:
+                    game_state.attempt_spawn(DEMOLISHER, [0, 13], 5)
+                    self.current_MP -= 15
+                else:
+                    game_state.attempt_spawn(DEMOLISHER, [0, 13], 2)
+                    self.current_MP -= 6
+
+                game_state.attempt_spawn(SCOUT, [14, 0], math.floor(self.current_MP))
+                self.completed_infiltrate_attack = True
+
+            if can_infiltrate:
+                return 
+
         # fix this, this is dumb but im tired
-        valid_start_positions = [[0, 13], [1, 12], [2, 11], [3, 10], [4, 9], [5, 8], [6, 7], [7, 6], [8, 5], [9, 4], [10, 3], [11, 2], [12, 1], [13, 0],
+        valid_start_positions = [[2, 11], [3, 10], [4, 9], [5, 8], [6, 7], [7, 6], [8, 5], [9, 4], [10, 3], [11, 2], [12, 1], [13, 0],
                                 [14,0], [15, 1], [16, 2], [17, 3], [18, 4], [19, 5], [20, 6], [21, 7], [22, 8], [23, 9], [24, 10], [25, 11], [26, 12], [27, 13]]
         
         scores = self.score_per_tile(game_state)
@@ -378,17 +592,22 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write("Highest Value Paths:")
         gamelib.debug_write(highest_value_paths)
 
-
         will_attack = False
+
+        """
         if self.current_MP >= 3 and highest_value_paths[0][3] > 5:
             game_state.attempt_spawn(DEMOLISHER, [highest_value_paths[0][0:2]], 1)
             will_attack = True
             self.current_MP -= 3
+        """
 
         # if we have at least eight mobile points and there is no threat at all on the lowest path, then attack with all scouts
-        if self.current_MP >= 8 and valid_paths[0][2] == 0:
+        if (self.current_MP >= 8 and valid_paths[0][2] == 0) or game_state.turn_number >= (self.last_attack_round + 10):
             game_state.attempt_spawn(SCOUT, [valid_paths[0][0:2]], math.floor(self.current_MP))
             will_attack = True
+
+            self.last_attack_round = game_state.turn_number
+        
 
         """
         # After a lot of testing, I found that spawning 3 scouts and 2 demolishers works pretty well.
@@ -399,11 +618,19 @@ class AlgoStrategy(gamelib.AlgoCore):
         """
 
         # When a path has a lot of threats on it, send a large pack of demolishers.
-        if valid_paths[0][2] > 0 and self.current_MP >= 12 and self.enemy_MP < 8:
-            game_state.attempt_spawn(DEMOLISHER, [valid_paths[0][0:2]], 4)
+        mp_per_round = (5 + game_state.turn_number // 10)
+        savings_3_rounds = (((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round
+        savings_2_rounds = (mp_per_round * .75) + mp_per_round
+        gamelib.debug_write("MP per round:")
+        gamelib.debug_write(savings_3_rounds)
+        gamelib.debug_write(savings_2_rounds)
+        if self.current_MP >= savings_3_rounds and self.enemy_MP < (savings_2_rounds + 1):
+            game_state.attempt_spawn(DEMOLISHER, [[18, 4]], int(self.current_MP // 3))
             will_attack = True
 
+            self.last_attack_round = game_state.turn_number
 
+        """
         # If we are trying to build a push and can afford shields, then buy them
         if will_attack and self.current_SP >= 4:
             # This is to deal with attacks from both sides, to ensure that support can reach
@@ -414,6 +641,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
             if self.current_SP >= 2:
                 game_state.attempt_upgrade([shield_location])
+        """
 
 
 

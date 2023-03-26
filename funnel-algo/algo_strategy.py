@@ -41,11 +41,6 @@ priorityList = [
        {
         "type": "Build",
         "structure": 0,
-        "location": [23, 13],
-       },
-       {
-        "type": "Build",
-        "structure": 0,
         "location": [24, 13],
        },
        {
@@ -73,7 +68,7 @@ priorityList = [
        {
         "type": "Build",
         "structure": 2,
-        "location": [24, 12],
+        "location": [25, 12],
        },
 
 
@@ -218,11 +213,6 @@ priorityList = [
        {
         "type": "Upgrade",
         "structure": 0,
-        "location": [23, 13],
-       },
-       {
-        "type": "Upgrade",
-        "structure": 0,
         "location": [24, 13],
        },
        {
@@ -235,50 +225,36 @@ priorityList = [
         "structure": 0,
         "location": [25, 13],
        },
+       {
+        "type": "Build",
+        "structure": 0,
+        "location": [7, 11],
+    },
+    {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [7, 11],
+    },
+    {
+        "type": "Build",
+        "structure": 0,
+        "location": [8, 10],
+    },
+    {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [8, 10],
+    },
 
 
        {
         "type": "Build",
         "structure": 2,
-        "location": [5, 10],
+        "location": [7, 10],
         "comment": "Turret protecting entrance of funnel"
        },
 
 
-       {
-        "type": "Upgrade",
-        "structure": 2,
-        "location": [3, 12],
-        "comment": "These are to upgrade turrets"
-       },
-       {
-        "type": "Upgrade",
-        "structure": 2,
-        "location": [24, 12],
-       },
-       {
-        "type": "Upgrade",
-        "structure": 2,
-        "location": [5, 10],
-       },
-       {
-        "type": "Upgrade",
-        "structure": 2,
-        "location": [6, 10],
-       },
-
-
-       {
-        "type": "Upgrade",
-        "structure": 0,
-        "location": [0, 13],
-        "comment": "These are to upgrade walls on the very corners"
-       },
-       {
-        "type": "Upgrade",
-        "structure": 0,
-        "location": [1, 13],
-       },
        {
         "type": "Upgrade",
         "structure": 0,
@@ -299,22 +275,6 @@ priorityList = [
         "structure": 0,
         "location": [7, 9],
        },
-       {
-        "type": "Upgrade",
-        "structure": 0,
-        "location": [8, 8],
-       },
-       {
-        "type": "Upgrade",
-        "structure": 0,
-        "location": [9, 7],
-       },
-       {
-        "type": "Upgrade",
-        "structure": 0,
-        "location": [10, 6],
-       },
-
 
        {
         "type": "Build",
@@ -341,16 +301,27 @@ priorityList = [
     ]
 
 extra_turret = [
-        {
+    {
         "type": "Build",
         "structure": 2,
-        "location": [6, 9],
-       },
-       {
+        "location": [5, 10],
+    },
+    {
         "type": "Upgrade",
         "structure": 2,
-        "location": [6, 9],
-       },
+        "location": [7, 10],
+    },
+    {
+        "type": "Build",
+        "structure": 2,
+        "location": [26, 12],
+    },
+    {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [26, 12],
+    },
+        
 ]
 
 more_funnel_protection = [
@@ -367,22 +338,33 @@ more_funnel_protection = [
     {
         "type": "Build",
         "structure": 2,
-        "location": [7, 10],
+        "location": [6, 9],
     },
     {
         "type": "Upgrade",
         "structure": 2,
-        "location": [7, 10],
+        "location": [6, 9],
     },
+    
     {
         "type": "Build",
         "structure": 0,
-        "location": [7, 11],
+        "location": [8, 11],
     },
     {
         "type": "Upgrade",
         "structure": 0,
-        "location": [7, 11],
+        "location": [8, 11],
+    },
+    {
+        "type": "Build",
+        "structure": 0,
+        "location": [9, 10],
+    },
+    {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [9, 10],
     },
 ]
 
@@ -481,7 +463,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
             game_state.attempt_spawn(INTERCEPTOR, [[7, 6]], 1)
             self.current_SP -= 1
-            if (self.enemy_MP >= (savings_4_rounds - 3) and game_state.turn_number < 30) or (self.enemy_MP >= savings_3_rounds and game_state.turn_number >= 30):
+            if (self.enemy_MP >= (savings_4_rounds - 3) and game_state.turn_number < 30) or (self.enemy_MP >= savings_3_rounds and game_state.turn_number >= 30):  
                 game_state.attempt_spawn(INTERCEPTOR, [[5, 8]], 1)
                 self.current_SP -= 1
 
@@ -489,7 +471,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         if game_state.turn_number == 15:
             self.defense_priority_list = self.defense_priority_list + extra_turret
 
-        if game_state.turn_number == 25:
+        if game_state.turn_number == 15:
             self.defense_priority_list = self.defense_priority_list + more_funnel_protection
 
     def destroy_damaged_walls(self, game_state):
@@ -591,14 +573,45 @@ class AlgoStrategy(gamelib.AlgoCore):
             # These two cases are to deal with the diamond shape of the map, could be achieved using an abs function too
             yVals = range(13 - y, 27 - (13 - y) + 1) if y < 14 else range(y - 14, 27 - (y - 14) + 1)
             for x in yVals:
-                # 3.5 is the range of a turret.
-                locations = game_state.game_map.get_locations_in_range([x, y], 3.5)
+                locations1 = game_state.game_map.get_locations_in_range([x, y], 3.5)
+                locations2 = game_state.game_map.get_locations_in_range([x, y], 4.5)
 
                 # Loop through each location within 3.5 tiles of each (x,y) pair and count number of turrets within that radius
-                for location in locations:
+                for location in locations1:
                     structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
-                    if structure is not None and structure.player_index == 1 and structure.unit_type == "DF":
-                        scores[y][x] += 1
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == TURRET:
+                        scores[y][x] += 2.51
+
+                for location in locations2:
+                    structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == TURRET:
+                        scores[y][x] -= 0.4
+
+                for location in locations2:
+                    structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == SUPPORT:
+                        scores[y][x] -= 0.3
+
+                for location in locations2:
+                    structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == WALL and not structure.upgraded:
+                        scores[y][x] -= 0.15
+                
+                for location in locations2:
+                    structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                    if structure is not None and structure.player_index == 1 and structure.unit_type == WALL and structure.upgraded:
+                        scores[y][x] -= 0.075
+                
+                for location in locations1:
+                    structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                    if structure is not None and structure.player_index == 0 and structure.unit_type == SUPPORT:
+                        scores[y][x] -= 0.2
+
+                # Positions deeper in the path are less likely to be accurate, and also generally less safe
+                scaler = min(0, y - 13)
+                scores[y][x] = math.pow(0.85, scaler)*scores[y][x] + 0.1*scaler
+
+
         return scores
     
     # Try to estimate the value of a path from the amount of units it will destroy.
@@ -634,7 +647,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             self.attempt_infiltrate_attack = True
             return
         
-        if len(structure1) != 0 and structure1[0].unit_type == "FF" and not structure1[0].upgraded and len(structure2) == 0 and len(structure4) == 0:
+        if len(structure1) != 0 and structure1[0].unit_type == "FF" and not structure1[0].upgraded and (len(structure2) == 0 or structure2[0].unit_type == "FF" and not structure2[0].upgraded and self.score_per_tile(game_state)[13][1] <= 4):
             game_state.attempt_remove([[0, 13], [1, 13]])
             self.prev_defense_priority_list = self.defense_priority_list.copy()
             self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[0, 13], [1, 13]]]
@@ -701,8 +714,8 @@ class AlgoStrategy(gamelib.AlgoCore):
             # Path is only none when starting point is blocked
             if path is not None:
                 # Loop through each location and calculate score as average "vulnerability"
-                path_score = sum([scores[y][x] for (x, y) in path]) / len(path)        
-                path_value = self.path_value(game_state, path)
+                path_score = sum([scores[y][x] for (x, y) in path])        
+                path_value = self.path_value(game_state, path) # / len(path)
                 valid_paths.append(start_pos + [path_score, path_value])
 
         # sort by lowest score
@@ -723,9 +736,16 @@ class AlgoStrategy(gamelib.AlgoCore):
             will_attack = True
             self.current_MP -= 3
         """
+        mp_per_round = (5 + game_state.turn_number // 10)
+        savings_3_rounds = (((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round
+        savings_2_rounds = (mp_per_round * .75) + mp_per_round
+        gamelib.debug_write("MP per round:")
+        gamelib.debug_write(savings_3_rounds)
+        gamelib.debug_write(savings_2_rounds)
+
 
         # if we have at least eight mobile points and there is no threat at all on the lowest path, then attack with all scouts
-        if (self.current_MP >= 8 and valid_paths[0][2] == 0) or game_state.turn_number >= (self.last_attack_round + 10):
+        if (self.current_MP >= 8 and valid_paths[0][2] == 0):
             game_state.attempt_spawn(SCOUT, [valid_paths[0][0:2]], math.floor(self.current_MP))
             self.current_MP -= math.floor(self.current_MP)
             will_attack = True
@@ -733,23 +753,18 @@ class AlgoStrategy(gamelib.AlgoCore):
             self.last_attack_round = game_state.turn_number
         
 
-        """
-        # After a lot of testing, I found that spawning 3 scouts and 2 demolishers works pretty well.
-        if 0 < valid_paths[0][2] < .3 and self.current_MP >= 9:
-            game_state.attempt_spawn(SCOUT, [valid_paths[0][0:2]], 3)
-            game_state.attempt_spawn(DEMOLISHER, [valid_paths[0][0:2]], 2)
+
+        elif valid_paths[0][2] < -5 and self.current_MP >= 12:
+            game_state.attempt_spawn(DEMOLISHER, [valid_paths[0][0:2]], 4)
             will_attack = True
-        """
+
+            self.last_attack_round = game_state.turn_number
+
 
         # When a path has a lot of threats on it, send a large pack of demolishers.
-        mp_per_round = (5 + game_state.turn_number // 10)
-        savings_3_rounds = (((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round
-        savings_2_rounds = (mp_per_round * .75) + mp_per_round
-        gamelib.debug_write("MP per round:")
-        gamelib.debug_write(savings_3_rounds)
-        gamelib.debug_write(savings_2_rounds)
-        if self.current_MP >= savings_3_rounds and self.enemy_MP < (savings_2_rounds + 1):
-            game_state.attempt_spawn(DEMOLISHER, [[18, 4]], int(self.current_MP // 3))
+        
+        elif (self.current_MP >= savings_3_rounds and self.enemy_MP < (savings_2_rounds + 1)) or game_state.turn_number >= (self.last_attack_round + 10):
+            game_state.attempt_spawn(DEMOLISHER, [valid_paths[0][0:2]], int(self.current_MP // 3))
             will_attack = True
 
             self.last_attack_round = game_state.turn_number

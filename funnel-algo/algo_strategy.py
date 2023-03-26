@@ -36,6 +36,11 @@ priorityList = [
        {
         "type": "Build",
         "structure": 0,
+        "location": [4, 12],
+       },
+       {
+        "type": "Build",
+        "structure": 0,
         "location": [23, 13],
        },
        {
@@ -188,12 +193,6 @@ priorityList = [
        {
         "type": "Build",
         "structure": 2,
-        "location": [5, 10],
-        "comment": "Turret protecting entrance of funnel"
-       },
-       {
-        "type": "Build",
-        "structure": 2,
         "location": [6, 10],
         "comment": "Turret protecting entrance of funnel"
        },
@@ -214,6 +213,11 @@ priorityList = [
        {
         "type": "Upgrade",
         "structure": 0,
+        "location": [4, 12],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
         "location": [23, 13],
        },
        {
@@ -230,6 +234,14 @@ priorityList = [
         "type": "Upgrade",
         "structure": 0,
         "location": [25, 13],
+       },
+
+
+       {
+        "type": "Build",
+        "structure": 2,
+        "location": [5, 10],
+        "comment": "Turret protecting entrance of funnel"
        },
 
 
@@ -292,6 +304,16 @@ priorityList = [
         "structure": 0,
         "location": [8, 8],
        },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [9, 7],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [10, 6],
+       },
 
 
        {
@@ -317,6 +339,52 @@ priorityList = [
 
 
     ]
+
+extra_turret = [
+        {
+        "type": "Build",
+        "structure": 2,
+        "location": [6, 9],
+       },
+       {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [6, 9],
+       },
+]
+
+more_funnel_protection = [
+    {
+        "type": "Build",
+        "structure": 0,
+        "location": [5, 13],
+    },
+    {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [5, 13],
+    },
+    {
+        "type": "Build",
+        "structure": 2,
+        "location": [7, 10],
+    },
+    {
+        "type": "Upgrade",
+        "structure": 2,
+        "location": [7, 10],
+    },
+    {
+        "type": "Build",
+        "structure": 0,
+        "location": [7, 11],
+    },
+    {
+        "type": "Upgrade",
+        "structure": 0,
+        "location": [7, 11],
+    },
+]
 
 
 class AlgoStrategy(gamelib.AlgoCore):
@@ -390,23 +458,39 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         self.build_offense(game_state)
 
+    def destroy_damaged_walls(self, game_state):
+        for y in range(13, 0, -1):
+            yVals = range(13 - y, 27 - (13 - y) + 1) if y < 14 else range(y - 14, 27 - (y - 14) + 1)
+            for x in yVals:
+                location = [x, y]
+                structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                if structure is not None and structure.player_index == 0 and structure.unit_type == WALL and structure.upgraded and structure.health <= 60:
+                    game_state.attempt_remove([x, y])
+
     def build_self_destruct_defense(self, game_state):
         # TODO: if it just recently changed rounds to a new multiple of 10, this will be wrong
         mp_per_round = (5 + game_state.turn_number // 10)
+        savings_2_rounds = (mp_per_round * .75) + mp_per_round
         savings_3_rounds = (((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round
         savings_4_rounds = (((((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round) * .75) + mp_per_round
 
-        if self.enemy_MP >= (savings_3_rounds - 2):
+        if (self.enemy_MP >= (savings_3_rounds - 2) and game_state.turn_number < 30) or (self.enemy_MP >= savings_2_rounds and game_state.turn_number >= 30):
             # game_state.attempt_spawn(WALL, [[4, 10]])
             # game_state.attempt_remove([[4, 10]])
             self.current_SP -= .5
 
             game_state.attempt_spawn(INTERCEPTOR, [[7, 6]], 1)
             self.current_SP -= 1
-            if self.enemy_MP >= (savings_4_rounds - 3):
+            if (self.enemy_MP >= (savings_4_rounds - 3) and game_state.turn_number < 30) or (self.enemy_MP >= savings_3_rounds and game_state.turn_number >= 30):
                 game_state.attempt_spawn(INTERCEPTOR, [[5, 8]], 1)
                 self.current_SP -= 1
 
+    def dynamic_priority_list_update(self, game_state):
+        if game_state.turn_number == 15:
+            self.defense_priority_list = self.defense_priority_list + extra_turret
+
+        if game_state.turn_number == 25:
+            self.defense_priority_list = self.defense_priority_list + more_funnel_protection
 
     def destroy_damaged_walls(self, game_state):
         for y in range(13, 0, -1):
@@ -428,6 +512,8 @@ class AlgoStrategy(gamelib.AlgoCore):
             self.defense_priority_list = self.prev_defense_priority_list
             self.completed_infiltrate_attack = False
             self.attempt_infiltrate_attack = False
+
+        self.dynamic_priority_list_update(game_state)
 
 
         # Try to build self-destruct defense, pretty powerful.
@@ -540,11 +626,20 @@ class AlgoStrategy(gamelib.AlgoCore):
         structure1 = game_state.game_map[[0, 14]]
         structure2 = game_state.game_map[[1, 14]]
         structure3 = game_state.game_map[[1, 15]]
+        structure4 = game_state.game_map[[2, 14]]
         if len(structure1) == 0:
             game_state.attempt_remove([[0, 13], [1, 13]])
             self.prev_defense_priority_list = self.defense_priority_list.copy()
             self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[0, 13], [1, 13]]]
             self.attempt_infiltrate_attack = True
+            return
+        
+        if len(structure1) != 0 and structure1[0].unit_type == "FF" and not structure1[0].upgraded and len(structure2) == 0 and len(structure4) == 0:
+            game_state.attempt_remove([[0, 13], [1, 13]])
+            self.prev_defense_priority_list = self.defense_priority_list.copy()
+            self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[0, 13], [1, 13]]]
+            self.attempt_infiltrate_attack = True
+            self.demolisher_spawns = {(0, 13): 1}
             return
 
         if len(structure2) == 0 and len(structure3) == 0:
@@ -552,14 +647,6 @@ class AlgoStrategy(gamelib.AlgoCore):
             self.prev_defense_priority_list = self.defense_priority_list.copy()
             self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[1, 13]]]
             self.attempt_infiltrate_attack = True
-            return
-        
-        if len(structure1) != 0 and structure1[0].unit_type == "FF" and not structure1[0].upgraded:
-            game_state.attempt_remove([[0, 13], [1, 13]])
-            self.prev_defense_priority_list = self.defense_priority_list.copy()
-            self.defense_priority_list = [i for i in self.defense_priority_list if i["location"] not in [[0, 13], [1, 13]]]
-            self.attempt_infiltrate_attack = True
-            self.demolisher_spawns = {(0, 13): 1}
             return
 
         """
@@ -582,7 +669,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             mp_per_round = (5 + game_state.turn_number // 10)
             savings_2_rounds =  ((mp_per_round * .75) + mp_per_round)
             savings_3_rounds = (((mp_per_round * .75) + mp_per_round) * .75) + mp_per_round
-            if self.attempt_infiltrate_attack and self.current_MP >= savings_3_rounds:
+            if self.attempt_infiltrate_attack:
                 # Check if both inner two walls are not upgraded
                 for demolisher_spawn in self.demolisher_spawns:
                     game_state.attempt_spawn(DEMOLISHER, list(demolisher_spawn), self.demolisher_spawns[demolisher_spawn])
@@ -593,13 +680,13 @@ class AlgoStrategy(gamelib.AlgoCore):
                 self.last_attack_round = game_state.turn_number
                 self.completed_infiltrate_attack = True
 
-            if self.current_MP >= savings_2_rounds:
+            if self.current_MP >= savings_3_rounds:
                 self.can_infiltrate(game_state)
 
             if self.attempt_infiltrate_attack and not self.completed_infiltrate_attack:
                 return 
 
-        # fix this, this is dumb but im tired
+        # TODO: fix this, this is dumb but im tired
         valid_start_positions = [[2, 11], [3, 10], [4, 9], [5, 8], [6, 7], [7, 6], [8, 5], [9, 4], [10, 3], [11, 2], [12, 1], [13, 0],
                                 [14,0], [15, 1], [16, 2], [17, 3], [18, 4], [19, 5], [20, 6], [21, 7], [22, 8], [23, 9], [24, 10], [25, 11], [26, 12], [27, 13]]
         
@@ -640,6 +727,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         # if we have at least eight mobile points and there is no threat at all on the lowest path, then attack with all scouts
         if (self.current_MP >= 8 and valid_paths[0][2] == 0) or game_state.turn_number >= (self.last_attack_round + 10):
             game_state.attempt_spawn(SCOUT, [valid_paths[0][0:2]], math.floor(self.current_MP))
+            self.current_MP -= math.floor(self.current_MP)
             will_attack = True
 
             self.last_attack_round = game_state.turn_number

@@ -410,6 +410,16 @@ class AlgoStrategy(gamelib.AlgoCore):
             self.do_not_attack = False
 
 
+    def destroy_damaged_walls(self, game_state):
+        for y in range(13, 0, -1):
+            yVals = range(13 - y, 27 - (13 - y) + 1) if y < 14 else range(y - 14, 27 - (y - 14) + 1)
+            for x in yVals:
+                location = [x, y]
+                structure = None if len(game_state.game_map[location]) == 0 else game_state.game_map[location][0]
+                if structure is not None and structure.player_index == 0 and structure.unit_type == WALL and structure.upgraded and structure.health <= 60:
+                    game_state.attempt_remove([x, y])
+
+
 
     def build_base_defenses(self, game_state):
         """
@@ -424,6 +434,9 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # Try to build self-destruct defense, pretty powerful.
         self.build_self_destruct_defense(game_state)
+
+        if self.enemy_MP <= 2 + (5 + game_state.turn_number/10):
+            self.destroy_damaged_walls(game_state)
 
         # gamelib.debug_write(self.current_SP)
         for defense in self.defense_priority_list:
@@ -442,6 +455,8 @@ class AlgoStrategy(gamelib.AlgoCore):
                 game_state.attempt_upgrade([defense["location"]])
                 self.current_SP -= upgradeCost
                 # gamelib.debug_write("Upgraded: " + str(self.config["unitInformation"][defense["structure"]]["shorthand"]))
+
+        
 
         """
         # I think these starter turret locations are very important. The first two are to protect the corners, while the

@@ -1360,6 +1360,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             
             
 
+
             if self.enemy_focus() <= -3:
                 game_state.attempt_spawn(WALL, [6, 9])
                 game_state.attempt_remove([6, 9])

@@ -419,6 +419,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         if self.completed_infiltrate_attack:
             self.defense_priority_list = self.prev_defense_priority_list
             self.completed_infiltrate_attack = False
+            self.attempt_infiltrate_attack = False
 
 
         # Try to build self-destruct defense, pretty powerful.
